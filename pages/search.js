@@ -1,3 +1,5 @@
+import { Button } from "@material-ui/core"
+
 export const getStaticProps = async () => {
    try{
     const res = await fetch(`http://167.172.142.105:5000/cassandra-job-posts`)
@@ -16,6 +18,6 @@ export const getStaticProps = async () => {
 export default function About({jobs}){
     console.log(jobs)
     return <>
-    
+    <Button color="primary">Hello World</Button>
     </>
 }
