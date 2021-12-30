@@ -11,7 +11,7 @@ export const getStaticProps = async () => {
     console.error("Error fetching homepage data", error);
    }
     
-  }
+}
 
 export default function About({jobs}){
     console.log(jobs)
