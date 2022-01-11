@@ -28,5 +28,8 @@ async function call (){
 
 export default async function handler(req, res) {
   await call()
-  .then(res.status(200).json(response))
+  .then(()=>{
+    if(response){
+    res.status(200).json(response)}
+  })
 }

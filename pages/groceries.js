@@ -15,7 +15,7 @@ export const getStaticProps = async () => {
 }
 
 export default function Groceries({ groceries }) {
-    console.log(groceries)
+    console.log(groceries.rows)
     return <>
         <Grid>
             <Button variant="contained">Click</Button>
