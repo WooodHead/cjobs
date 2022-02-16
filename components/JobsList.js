@@ -1,8 +1,21 @@
 import { Card, CardContent, Grid, Typography } from "@material-ui/core";
+import Pagination from "@mui/material/Pagination";
+// import Stack from "@mui/material/Stack";
 import classes from "../styles/JobsList.module.css";
 import companies from "../response.json";
+import { useState } from "react";
 
 const JobsList = ({ clickedJob, setClickedJob }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [jobsPerPage, setJobsPerPage] = useState(5);
+  const allJobs = companies.hits.hits;
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = allJobs.slice(indexOfFirstJob, indexOfLastJob);
+  const pageCount = Math.ceil(allJobs.length / jobsPerPage);
+
+  const handleChange = (event, value) => setCurrentPage(value);
+
   const onCardClick = (item) => {
     if (item._id === clickedJob._id) {
       return setClickedJob("");
@@ -12,7 +25,7 @@ const JobsList = ({ clickedJob, setClickedJob }) => {
 
   return (
     <Grid xs={6} item>
-      {companies.hits.hits.map((item) => {
+      {currentJobs.map((item) => {
         return (
           <Card
             key={item._id}
@@ -35,6 +48,12 @@ const JobsList = ({ clickedJob, setClickedJob }) => {
           </Card>
         );
       })}
+      <Pagination
+        count={pageCount}
+        page={currentPage}
+        color="secondary"
+        onChange={handleChange}
+      />
     </Grid>
   );
 };
