@@ -1,5 +1,10 @@
+.summaryCard {
+  margin-bottom: 30px;
+}
 .cardContent {
-  height: 600px;
+  max-height: 1200px;
   overflow-y: scroll;
-  position: fixed;
+}
+.headerButtons {
+  justify-content: space-between;
 }

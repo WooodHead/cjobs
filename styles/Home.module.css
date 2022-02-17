@@ -1,5 +1,4 @@
 .container {
-  min-height: 100vh;
   padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
@@ -9,7 +8,7 @@
 }
 
 .main {
-  min-height: 100vh;
+  height: 100%;
   padding: 4rem 0;
   flex: 1;
   display: flex;
@@ -113,6 +112,10 @@
 .logo {
   height: 1em;
   margin-left: 0.5rem;
+}
+
+.pagination {
+  margin-top: 15px;
 }
 
 @media (max-width: 600px) {

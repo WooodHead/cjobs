@@ -1,4 +1,13 @@
 .cardItem {
   cursor: pointer;
-  margin-bottom: 16px;
+  margin-bottom: 15px;
+}
+
+.cardItem:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+  transform: translateY(5px);
+}
+
+.pagination {
+  margin-top: 40px;
 }
