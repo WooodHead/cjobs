@@ -2000,3 +2000,14 @@
 .sk-layout__filters .sk-select select {
     width: 100%
 }
+
+.logo {
+    max-width: 450px;
+    max-height: 250px;
+    margin-bottom: 20px;
+  }
+
+.tag {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
