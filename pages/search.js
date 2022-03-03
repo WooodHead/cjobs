@@ -15,7 +15,6 @@ export const getStaticProps = async () => {
 };
 
 export default function About({ jobs }) {
-  console.log(jobs);
   return (
     <>
       <Grid>

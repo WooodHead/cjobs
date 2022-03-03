@@ -28,26 +28,22 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <Grid container>
-        <FilterForm setSearchedJob={setSearchedJob} />
-      </Grid>
-      <Grid container spacing={2}>
-        <JobsList
-          allJobs={allJobs}
-          clickedJob={clickedJob}
-          setClickedJob={setClickedJob}
-          currentJobs={currentJobs}
-          searchedJob={searchedJob}
-          setFilteredJobs={setFilteredJobs}
-          filteredJobs={filteredJobs}
-          currentFilteredJobs={currentFilteredJobs}
-        />
-        {clickedJob && (
-          <JobDescription
-            jobDescription={clickedJob._source.description}
-            job={clickedJob._source}
+      <Grid container spacing={2} className={styles.jobsContainer}>
+        <Grid xs={6} item>
+          <JobsList
+            clickedJob={clickedJob}
+            setClickedJob={setClickedJob}
+            currentJobs={currentJobs}
           />
-        )}
+        </Grid>
+        <Grid xs={6} item>
+          {clickedJob && (
+            <JobDescription
+              jobDescription={clickedJob._source.description_html}
+              job={clickedJob._source}
+            />
+          )}
+        </Grid>
       </Grid>
       <Pagination
         className={styles.pagination}
