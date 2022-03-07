@@ -1,10 +1,3 @@
-.content {
-    font-size: 19px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-}
-
 .a {
     color: #007bff;
 }
@@ -12,32 +5,4 @@
 .a:hover{
     color: #1b3b92;
     text-decoration: underline;
-}
-
-.h1, .h2 {
-    font-weight: 500;
-    line-height: 1.2;
-    padding: 0;
-    margin-bottom: 10px;
-}
-
-.h1 {
-    font-size: 45px;
-}
-
-.h2 {
-    font-size: 35px;
-}
-
-.ul {
-    padding: 0;
-    margin: 0 0 18px 26px;
-}
-
-.li {
-    margin-bottom: 10px;
-}
-
-.li::marker {
-    font-size: 21px;
 }

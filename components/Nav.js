@@ -1,22 +1,32 @@
-import Link from 'next/link';
-import classes from '../styles/Nav.module.css';
+import Link from "next/link";
+import { AppBar, Grid, Paper, Container, Toolbar } from "@material-ui/core";
+import classes from "../styles/Nav.module.css";
+
+const navigationLinks = [
+  { name: "Home", href: "/" },
+  { name: "About Us", href: "/aboutus" },
+];
 
 const Nav = () => {
   return (
-    <nav className={classes.nav}>
-      <ul>
-        <li>
-          <Link href='/'>
-            <a>Home</a>
-          </Link>
-        </li>
-        <li>
-          <Link href='/aboutus'>
-            <a>About us</a>
-          </Link>
-        </li>
-      </ul>
-    </nav>
+    <Grid className={classes.nav}>
+      <Container lg>
+        <Toolbar disableGutters>
+          {navigationLinks.map((item) => {
+            return (
+              <Link
+                key={item.name}
+                style={{ textDecoration: "none" }}
+                className={classes.link}
+                href={item.href}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
+        </Toolbar>
+      </Container>
+    </Grid>
   );
 };
 

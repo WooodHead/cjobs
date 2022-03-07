@@ -1,87 +1,45 @@
-import { Container, Grid } from '@material-ui/core';
-import classes from '../styles/AboutUs.module.css';
+import { Container, Grid, Typography } from "@material-ui/core";
 
 function AboutUs() {
   return (
-    <Container maxWidth='lg'>
-      <Grid className={classes.content}>
-        <h1 className={classes.h1}>About Cassandra.Link</h1>
-        <p>
+    <Container maxWidth="lg">
+      <Grid>
+        <Typography variant="h2" component="h1">
+          Cassandra Jobs
+        </Typography>
+        <Typography paragraph>
           {
-            'Welcome to Cassandra.Link, a knowledge base with videos, articles, and open source projects to help Apache Cassandra developers, administrators, and architects learn, participate, master, and then contribute to the Apache Cassandra community'
+            "Welcome to Cassandra.Jobs, a curated job board dedicated solely to Cassandra to help Apache Cassandra developers, administrators, and architects find their dream job."
           }
-        </p>
-        <p>
+        </Typography>
+        <Typography paragraph>
           {
-            "Apache Cassandra is one of the most forward looking Databases in the world. It is designed for now and the future. Our goal is to build a highly curated knowledge base and news feed so that anyone who's interested can keep their ear to the ground on what's happening with Cassandra and anything else that claims to be like Cassandra. This means more than Apache Cassandra today because CQL is used in Scylla, Yugabyte, Elassandra, and CosmosDB."
+            "Apache Cassandra is one of the most forward looking Databases in the world. It is designed for now and the future. Our goal is to connect Cassandra professionals with potential opportunities using a technology that is continuing to gain traction with enterprises who need real-time, resilient, scalable platforms."
           }
-        </p>
-        <p>
-          {'Most of us above work for '}
-          <a
-            className={classes.a}
-            href='https://anant.us/'
-            target='_blank'
-            rel='noreferrer'
-          >
-            Anant Corporation
-          </a>
-          ,
-          {
-            " but that doesn't mean you have to work with us to work on this project. If you are interested in contributing, please fork the awesome-cassandra "
-          }
-          <a
-            className={classes.a}
-            href='https://github.com/Anant/awesome-cassandra'
-            target='_blank'
-            rel='noreferrer'
-          >
-            repository
-          </a>
-          {
-            " and add content there, or create an issue with an idea that you have for the project. Sorry but we have to have some filter so that dead-beats don't waste our precious time."
-          }
-        </p>
-        <p>
-          {
-            'All of the content is open source, but the system that builds this site is internal to Anant. We have open sourced parts of it at the '
-          }
-          <a
-            className={classes.a}
-            href='https://github.com/Appleseed'
-            target='_blank'
-            rel='noreferrer'
-          >
-            Appleseed Project
-          </a>
-        </p>
-        <h2 className={classes.h2}>The Team</h2>
-        <ul className={classes.ul}>
-          <li className={classes.li}>Editor / Curator : Rahul Singh</li>
-          <li className={classes.li}>Project Manager: Arpan Patel</li>
-          <li className={classes.li}>
-            Interface: Rahul Singh, Ryan Quey, Arpan Patel, Josh Barnes
-          </li>
-          <li className={classes.li}>
-            Software: Ryan Quey, Arpan Patel, Josh Barnes, Stefan Nikolovski
-          </li>
-          <li className={classes.li}>
-            Database: Rahul Singh, Jagannath Bilgi, Ryan Quey, Stefan Nikolovski
-          </li>
-          <li className={classes.li}>
-            Systems : Jagannath Bilgi, Rahul Singh, Ryan Quey
-          </li>
-        </ul>
-        <h2 className={classes.h2}>Alumini</h2>
-        <ul className={classes.ul}>
-          <li className={classes.li}>Project Manager: Tanaka Mapondera</li>
-          <li className={classes.li}>
-            Interface: Mohammad Danish Yousuf, Tanaka Mapondera, Rishi Nair
-          </li>
-          <li className={classes.li}>
-            Software: Mohammad Danish Yousuf, Rishi Nair
-          </li>
-        </ul>
+        </Typography>
+        <Typography component="h2" variant="h3">
+          The Team
+        </Typography>
+        <Typography component="ul">
+          <Typography component="li" gutterBottom>
+            Editor: Rahul Singh
+          </Typography>
+          <Typography component="li" gutterBottom>
+            Project Manager: Danielle Crispino
+          </Typography>
+          <Typography component="li" gutterBottom>
+            Interface: Max Logan
+          </Typography>
+          <Typography component="li" gutterBottom>
+            Software: Ryan Quey, Arpan Patel, Stefan Nikolovski
+          </Typography>
+          <Typography component="li" gutterBottom>
+            Database: Rahul Singh, Jagannath Bilgi, Ryan Quey
+          </Typography>
+          <Typography component="li" paragraph>
+            Systems: Jagannath Bilgi, Rahul Singh, Ryan Quey
+          </Typography>
+        </Typography>
       </Grid>
     </Container>
   );
