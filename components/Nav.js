@@ -10,22 +10,20 @@ const navigationLinks = [
 const Nav = () => {
   return (
     <Grid className={classes.nav}>
-      <Container lg>
-        <Toolbar disableGutters>
-          {navigationLinks.map((item) => {
-            return (
-              <Link
-                key={item.name}
-                style={{ textDecoration: "none" }}
-                className={classes.link}
-                href={item.href}
-              >
-                {item.name}
-              </Link>
-            );
-          })}
-        </Toolbar>
-      </Container>
+      <Toolbar disableGutters>
+        {navigationLinks.map((item) => {
+          return (
+            <Link
+              key={item.name}
+              style={{ textDecoration: "none" }}
+              className={classes.link}
+              href={item.href}
+            >
+              {item.name}
+            </Link>
+          );
+        })}
+      </Toolbar>
     </Grid>
   );
 };
