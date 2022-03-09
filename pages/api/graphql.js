@@ -1,16 +1,13 @@
-import { ApolloServer, gql } from "apollo-server-micro";
+import Cors from "micro-cors";
+import {ApolloServer, gql} from 'apollo-server-micro';
 import {
   MultiMatchQuery,
-  RefinementSelectFacet,
-  SearchkitResolver,
-  SearchkitSchema,
-} from "@searchkit/schema";
-import cors from "micro-cors";
-import { useEffect } from "react";
+  SearchkitSchema
+} from '@searchkit/schema'
 
 const searchkitConfig = {
-  host: "167.172.142.105:5000",
-  index: "cassandra_job_posts",
+  host: 'http://localhost:9200',
+  index: 'cassandra_job_posts',
   hits: {
     fields: [
       "external_api_name",
@@ -33,36 +30,17 @@ const searchkitConfig = {
       "job_hours_type",
       "how_to_apply_html",
       "updated_at",
-    ],
+    ]
   },
-  query: new MultiMatchQuery({
-    fields: ["description^1"],
-  }),
-  facets: [
-    new RefinementSelectFacet({
-      identifier: "relevance",
-      field: "_score",
-      label: "Relevance",
-    }),
-    new RefinementSelectFacet({
-      identifier: "latest releases",
-      field: "external_api_published_at",
-      label: "Latest Releases",
-    }),
-    new RefinementSelectFacet({
-      identifier: "earliest releases",
-      field: "external_api_published_at",
-      label: "Earliest Releases",
-    }),
-  ],
-};
-
+  query: new MultiMatchQuery({ fields: [] }),
+  facets: []
+}
 const { typeDefs, withSearchkitResolvers, context } = SearchkitSchema({
-  config: searchkitConfig,
-  typeName: "ResultSet", // type name for Searchkit Root
-  hitTypeName: "ResultHit", // type name for each search result
-  addToQueryType: true,
-});
+  config: searchkitConfig, // searchkit configuration
+  typeName: 'ResultSet', // type name for Searchkit Root
+  hitTypeName: 'ResultHit', // type name for each search result
+  addToQueryType: true // When true, adds a field called results to Query type
+})
 
 export const config = {
   api: {
@@ -70,67 +48,42 @@ export const config = {
   },
 };
 
-// const typeDefs = [
-//   gql`
-//     type Query {
-//       root: String
-//     }
+const cors = Cors();
 
-//     type Mutation {
-//       root: String
-//     }
-//   `,
-// ];
 const server = new ApolloServer({
   typeDefs: [
     gql`
-      type Query {
-        root: String
-      }
+    type Query {
+      root: String
+    }
 
-      type HitFields {
-        external_api_name: String
-        external_api_id: Int
-        original_post_url: String
-        tags: [String]
-        external_api_published_at: Int
-        description: String
-        description_html: String
-        position_name: String
-        position_category: String
-        company_name: String
-        company_logo_url: String
-        external_api_verified: String
-        external_api_original: String
-        external_api_updated_at: Int
-        job_post_image_url: String
-        location: String
-        company_url: String
-        job_hours_type: String
-        how_to_apply_html: String
-        updated_at: Int
-      }
+    type HitFields {
+      root: String
+    }
 
-      type ResultHit implements SKHit {
-        id: ID!
-        fields: HitFields
-        customField: String
-      }
-    `,
-    ...typeDefs,
+    # Type name should match the hit typename
+    type ResultHit implements SKHit {
+      id: ID!
+      fields: HitFields
+    }
+  `, ...typeDefs
   ],
   resolvers: withSearchkitResolvers({}),
   introspection: true,
   playground: true,
   context: {
-    ...context,
-  },
+    ...context
+  }
+})
+
+const startServer = server.start();
+
+export default cors(async (req, res) => {
+  if (req.method === "OPTIONS") {
+    res.end();
+    return false;
+  }
+
+  await startServer;
+  await server.createHandler({ path: "/api/graphql" })(req, res);
 });
-
-const handler = server
-  .start()
-  .then((res) => server.createHandler({ path: "/api/graphql" }));
-
-export default cors()((req, res) =>
-  req.method === "OPTIONS" ? res.end() : handler
-);
