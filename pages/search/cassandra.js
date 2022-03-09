@@ -30,28 +30,10 @@ import JobDescription from "../../components/JobDescription";
 import styles from "../../styles/Home.module.css";
 import esEndpoint from "../api/elasticSearch";
 
-// const index_name = "cassandra_job_posts";
-// const esEndpoint = `http://${process.env.API_KEY}/api/elasticsearch/${index_name}`;
+
 const searchkit = new SearchkitManager(esEndpoint);
 
-// Rename
-// const JobHitsItem = (props) => {
-//   const { bemBlocks, result } = props
-//   let url = result._source.url
-//   const source = extend({}, result._source, result.highlight)
-//   // console.log(source)
-//   return (
-//     <Box className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit" style={{ position: 'relative' }}>
-//       <a href={url} style={{ height: '236px' }}>
-//         <img data-qa="poster" alt="No Logo Given!" className={bemBlocks.item("poster")} src={result._source.logo} width="170" style={{ margin: 'auto' }} />
-//         <Box data-qa="position" className={bemBlocks.item("position")} dangerouslySetInnerHTML={{ __html: source.position }} style={{ position: 'absolute', top: '180px', left: '15px' }}>
-//         </Box>
-//       </a>
-//     </Box>
-//   )
-// }
 
-// Rename
 const JobHitsItem = ({ bemBlocks, result, selectedJob, setSelectedJob }) => {
   let url = result._source.original_post_url;
   const source = extend({}, result._source, result.highlight || {});
