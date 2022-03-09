@@ -6,7 +6,7 @@ import {
 } from '@searchkit/schema'
 
 const searchkitConfig = {
-  host: 'http://localhost:9200',
+  host: 'http://167.172.142.105:5000',
   index: 'cassandra_job_posts',
   hits: {
     fields: [
@@ -53,28 +53,46 @@ const cors = Cors();
 const server = new ApolloServer({
   typeDefs: [
     gql`
-    type Query {
-      root: String
-    }
-
-    type HitFields {
-      root: String
-    }
-
-    # Type name should match the hit typename
-    type ResultHit implements SKHit {
-      id: ID!
-      fields: HitFields
-    }
-  `, ...typeDefs
+      type Query {
+        root: String
+      }
+      type HitFields {
+        external_api_name: String
+        external_api_id: Int
+        original_post_url: String
+        tags: [String]
+        external_api_published_at: String
+        description: String
+        description_html: String
+        position_name: String
+        position_category: String
+        company_name: String
+        company_logo_url: String
+        external_api_verified: String
+        external_api_original: String
+        external_api_updated_at: Int
+        job_post_image_url: String
+        location: String
+        company_url: String
+        job_hours_type: String
+        how_to_apply_html: String
+        updated_at: Int
+      }
+      type ResultHit implements SKHit {
+        id: ID!
+        fields: HitFields
+        customField: String
+      }
+    `,
+    ...typeDefs,
   ],
   resolvers: withSearchkitResolvers({}),
   introspection: true,
   playground: true,
   context: {
-    ...context
-  }
-})
+    ...context,
+  },
+});
 
 const startServer = server.start();
 
