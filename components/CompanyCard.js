@@ -12,13 +12,19 @@ const CompanyCard = ({ companyInfo }) => {
             <Grid container>
               <Grid item xs={6}>
                 <CardContent>
-                  <Typography variant="h2">Header</Typography>
-                  <Typography variant="h5">Location</Typography>
+                  <Typography variant="h2">
+                    {companyInfo.hits.hits[0]._source.name}
+                  </Typography>
+                  <Typography variant="h5">
+                    {companyInfo.hits.hits[0]._source.city}
+                  </Typography>
                 </CardContent>
               </Grid>
               <Grid item xs={6}>
                 <CardContent>
-                  <Typography>Description</Typography>
+                  <Typography>
+                    {companyInfo.hits.hits[0]._source.clearbit_description}
+                  </Typography>
                 </CardContent>
               </Grid>
             </Grid>
