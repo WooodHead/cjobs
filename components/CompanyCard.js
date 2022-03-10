@@ -1,4 +1,11 @@
-import { Card, CardContent, Grid, Typography, Box } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  Box,
+  Chip,
+} from "@material-ui/core";
 import classes from "../styles/CompanyCard.module.css";
 
 const CompanyCard = ({ companyInfo }) => {
@@ -31,6 +38,18 @@ const CompanyCard = ({ companyInfo }) => {
           <Card>
             <CardContent>
               <Typography>Tehnologies</Typography>
+              <Typography>
+                {companyInfo.hits.hits[0]._source.clearbit_tech.map((item) => {
+                  return (
+                    <Chip
+                      variant="outlined"
+                      key={item}
+                      label={item}
+                      className={classes.cardChip}
+                    />
+                  );
+                })}
+              </Typography>
               <Typography>Categories</Typography>
             </CardContent>
           </Card>

@@ -6,6 +6,10 @@
   margin-bottom: 32px;
 }
 
+.cardChip {
+  margin: 5px;
+}
+
 /* .cardItem {
     cursor: pointer;
     margin-bottom: 15px;
