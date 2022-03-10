@@ -6,29 +6,43 @@
   margin-bottom: 20px;
 }
 
-@media screen and (min-width: 600px) {
-  .cardHeader{
-    display: flex;
-  }
+.jobTechnologies {
+  margin-bottom: 20px;
+}
+
+.posts {
+  max-height: 890px;
+  min-height: 890px;
+  overflow-y: scroll;
 }
 
 .tehnologies {
   display: grid;
   grid-template-columns: 50% 50%;
   margin: 5px;
+  max-height: 400px;
+  overflow-y: scroll;
 }
 
+.informationsGrid {
+  min-height: 700px;
+  max-height: 1200px;
+}
 
+.cardHeaderName {
+  margin-right: 100px;
+}
 
 @media screen and (min-width: 700px) {
-  .cardHeader{
+  .cardHeader {
     display: flex;
   }
 
-  .cardHeaderName {
-    margin-right: 100px;
+  @media screen and (min-width: 600px) {
+    .cardHeader {
+      display: flex;
+    }
   }
-
 }
 
 /* .cardItem {

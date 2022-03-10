@@ -19,6 +19,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const CompanyCard = ({ companyInfo }) => {
+  console.log(companyInfo);
   const [fetchedData, setFetchedData] = useState(null);
   // const jobs = service.getJobs();
   const finalData = printData().then((final) => setFetchedData(final));
@@ -52,8 +53,8 @@ const CompanyCard = ({ companyInfo }) => {
       </Grid>
 
       <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <Card className={classes.cardTehnologiesCategories}>
+        <Grid item xs={6} className={classes.informationsGrid}>
+          <Card className={classes.jobTechnologies}>
             <Typography>Tehnologies</Typography>
             <Box className={classes.tehnologies}>
               {companyInfo.hits.hits[0]._source.clearbit_tech.map((item) => (
@@ -63,16 +64,29 @@ const CompanyCard = ({ companyInfo }) => {
               ))}
             </Box>
           </Card>
+          <Card className={classes.jobCategories}>
+            <Typography>Categories</Typography>
+            <Box className={classes.tehnologies}>
+              {companyInfo.hits.hits[0]._source.clearbit_tech_categories.map(
+                (item) => (
+                  <Item key={item} elevation={2}>
+                    {`${item}`}
+                  </Item>
+                )
+              )}
+            </Box>
+          </Card>
         </Grid>
         <Grid item xs={6}>
-          <Card>
+          <Card className={classes.posts}>
             <CardContent>
-              <Typography variant="h6">
+              <Typography variant="h6">Job Posts</Typography>
+              <Box className={classes.posts}>
                 {fetchedData &&
                   fetchedData.hits.hits.map((data) => {
                     return <p>{data._source.position_name}</p>;
                   })}
-              </Typography>
+              </Box>
             </CardContent>
           </Card>
         </Grid>
