@@ -34,55 +34,14 @@ import { gql, useQuery } from "@apollo/client";
 import { useSearchkitVariables, withSearchkit } from "@searchkit/client";
 import withApollo from "../../lib/withApollo";
 
-const QUERY = gql`
-  query resultSet {
-    results {
-      hits {
-        items {
-          id
-        }
-      }
-    }
-  }
-`;
 
-// Rename
-// const JobHitsItem = ({ bemBlocks, result, selectedJob, setSelectedJob }) => {
-//   let url = result._source.original_post_url;
-//   const source = extend({}, result._source, result.highlight || {});
-//   // const company_search_url = `http://${host}:167.172.142.105/api/company/${source.company_name}`
+const searchkit = new SearchkitManager(esEndpoint);
 
-//   const onCardClick = (item) => {
-//     setSelectedJob(item);
-//   };
 
-//   return (
-//     <Card
-//       variant="outlined"
-//       onClick={() => onCardClick(source)}
-//       className={classes.cardItem}
-//       sx={{ minWidth: 275 }}
-//     >
-//       <Box
-//         className={bemBlocks.item().mix(bemBlocks.container("item"))}
-//         data-qa="hit"
-//       >
-//         <CardContent>
-//           <Box className={bemBlocks.item("details")}>
-//             <h2 className={bemBlocks.item("title")}>{source.position_name}</h2>
-//             <p className={bemBlocks.item("subtitle")}>
-//               <b>Company: </b>
-//               {source.company_name} <b>Date: </b>{" "}
-//               {source.external_api_published_at} <b>Tags: </b>{" "}
-//               {source.tags && source.tags.join(", ")} <b>Category: </b>{" "}
-//               {source.position_category}
-//             </p>
-//           </Box>
-//         </CardContent>
-//       </Box>
-//     </Card>
-//   );
-// };
+const JobHitsItem = ({ bemBlocks, result, selectedJob, setSelectedJob }) => {
+  let url = result._source.original_post_url;
+  const source = extend({}, result._source, result.highlight || {});
+  // const company_search_url = `http://${host}:167.172.142.105/api/company/${source.company_name}`
 
 const Cassandra = () => {
   const variables = useSearchkitVariables();
