@@ -18,6 +18,19 @@
   margin: 5px;
 }
 
+
+
+@media screen and (min-width: 700px) {
+  .cardHeader{
+    display: flex;
+  }
+
+  .cardHeaderName {
+    margin-right: 100px;
+  }
+
+}
+
 /* .cardItem {
     cursor: pointer;
     margin-bottom: 15px;
