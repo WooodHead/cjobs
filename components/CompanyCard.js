@@ -7,8 +7,9 @@ import {
   Paper,
 } from "@material-ui/core";
 import classes from "../styles/CompanyCard.module.css";
+import printData from "../services/jobs-service";
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
-
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   textAlign: "center",
@@ -18,7 +19,11 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const CompanyCard = ({ companyInfo }) => {
-  console.log(companyInfo);
+  const [fetchedData, setFetchedData] = useState(null);
+  // const jobs = service.getJobs();
+  const finalData = printData().then((final) => setFetchedData(final));
+
+  fetchedData && console.log(fetchedData.hits.hits);
 
   return (
     <Box className={classes.companyWrapper}>
@@ -62,7 +67,12 @@ const CompanyCard = ({ companyInfo }) => {
         <Grid item xs={6}>
           <Card>
             <CardContent>
-              <Typography>Job Posts</Typography>
+              <Typography variant="h6">
+                {fetchedData &&
+                  fetchedData.hits.hits.map((data) => {
+                    return <p>{data._source.position_name}</p>;
+                  })}
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
