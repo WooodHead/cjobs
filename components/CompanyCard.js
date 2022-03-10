@@ -9,18 +9,22 @@ const CompanyCard = ({ companyInfo }) => {
       <Grid container>
         <Grid item xs={12}>
           <Card className={classes.cardHeader}>
-            <Grid container>
-              <Grid item xs={6}>
-                <CardContent>
-                  <Typography variant="h2">Header</Typography>
-                  <Typography variant="h5">Location</Typography>
-                </CardContent>
-              </Grid>
-              <Grid item xs={6}>
-                <CardContent>
-                  <Typography>Description</Typography>
-                </CardContent>
-              </Grid>
+            <Grid className={classes.cardHeaderName}>
+              <CardContent>
+                <Typography variant="h2">
+                  {companyInfo.hits.hits[0]._source.name}
+                </Typography>
+                <Typography variant="h5">
+                  {companyInfo.hits.hits[0]._source.city}
+                </Typography>
+              </CardContent>
+            </Grid>
+            <Grid>
+              <CardContent>
+                <Typography>
+                  {companyInfo.hits.hits[0]._source.clearbit_description}
+                </Typography>
+              </CardContent>
             </Grid>
           </Card>
         </Grid>
