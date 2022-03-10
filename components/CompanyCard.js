@@ -24,7 +24,7 @@ const CompanyCard = ({ companyInfo }) => {
     <Box className={classes.companyWrapper}>
       <Grid container>
         <Grid item xs={12}>
-          <Card className={classes.cardHeader}
+          <Card className={classes.cardHeader}>
             <Grid className={classes.cardHeaderName}>
               <CardContent>
                 <Typography variant="h2">
