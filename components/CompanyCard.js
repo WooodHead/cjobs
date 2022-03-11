@@ -55,7 +55,7 @@ const CompanyCard = ({ companyInfo }) => {
       <Grid container spacing={2}>
         <Grid item xs={6} className={classes.informationsGrid}>
           <Card className={classes.jobTechnologies}>
-            <Typography>Tehnologies</Typography>
+            <Typography variant="overline">Tehnologies</Typography>
             <Box className={classes.tehnologies}>
               {companyInfo.hits.hits[0]._source.clearbit_tech.map((item) => (
                 <Item key={item} elevation={2}>
@@ -65,7 +65,7 @@ const CompanyCard = ({ companyInfo }) => {
             </Box>
           </Card>
           <Card className={classes.jobCategories}>
-            <Typography>Categories</Typography>
+            <Typography variant="overline">Categories</Typography>
             <Box className={classes.tehnologies}>
               {companyInfo.hits.hits[0]._source.clearbit_tech_categories.map(
                 (item) => (
@@ -80,11 +80,21 @@ const CompanyCard = ({ companyInfo }) => {
         <Grid item xs={6}>
           <Card className={classes.posts}>
             <CardContent>
-              <Typography variant="h6">Job Posts</Typography>
+              <Typography variant="overline">Job Posts</Typography>
               <Box className={classes.posts}>
                 {fetchedData &&
                   fetchedData.hits.hits.map((data) => {
-                    return <p>{data._source.position_name}</p>;
+                    return (
+                      <Card
+                        key={data._id}
+                        variant="outlined"
+                        sx={{ minWidth: 275 }}
+                        className={classes.cardItem}
+                      >
+                        <CardContent>{data._source.position_name}</CardContent>
+                      </Card>
+                    );
+                    // return <p>{data._source.position_name}</p>;
                   })}
               </Box>
             </CardContent>
