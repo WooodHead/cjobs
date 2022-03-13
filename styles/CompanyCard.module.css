@@ -1,0 +1,76 @@
+.companyWrapper {
+  width: 80%;
+}
+
+.cardHeader {
+  margin-bottom: 20px;
+}
+
+.jobTechnologies {
+  margin-bottom: 20px;
+}
+
+.posts {
+  max-height: 904px;
+  min-height: 904px;
+  overflow-y: scroll;
+}
+
+.tehnologies {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin: 5px;
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.informationsGrid {
+  min-height: 700px;
+  max-height: 1200px;
+}
+
+.cardHeaderName {
+  margin-right: 100px;
+}
+
+.cardItem {
+  cursor: pointer;
+  margin-bottom: 15px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.cardItem:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+  transform: translateY(5px);
+  transition: 0.4s;
+  animation: ease-in;
+  background-color: rgb(83, 83, 83);
+  color: white;
+}
+
+@media screen and (min-width: 700px) {
+  .cardHeader {
+    display: flex;
+  }
+
+  @media screen and (min-width: 600px) {
+    .cardHeader {
+      display: flex;
+    }
+  }
+}
+
+/* .cardItem {
+    cursor: pointer;
+    margin-bottom: 15px;
+  }
+  
+.cardItem:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+  transform: translateY(5px);
+  transition: 0.4s;
+  animation: ease-in;
+} */
