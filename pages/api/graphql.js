@@ -6,7 +6,7 @@ import {
 } from '@searchkit/schema'
 
 const searchkitConfig = {
-  host: 'http://localhost:5000/api/elasticsearch',
+  host: 'http://167.172.142.105:5000/api/elasticsearch',
   index: 'cassandra_job_posts',
   hits: {
     fields: [
