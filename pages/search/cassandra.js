@@ -25,7 +25,14 @@ import {
   ActionBarRow,
   SideBar,
 } from "searchkit";
-import { Card, CardContent, Grid, Typography, Box } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  Box,
+  Chip,
+} from "@material-ui/core";
 import JobDescription from "../../components/JobDescription";
 import styles from "../../styles/Home.module.css";
 import esEndpoint from "../api/elasticSearch";
@@ -57,6 +64,20 @@ const JobHitsItem = ({ bemBlocks, result, selectedJob, setSelectedJob }) => {
         <CardContent>
           <Box className={bemBlocks.item("details")}>
             <h2 className={bemBlocks.item("title")}>{source.position_name}</h2>
+            <Box>
+              {source.tags &&
+                source.tags.map((tag, index) => {
+                  return (
+                    <Chip
+                      key={tag}
+                      className={classes.tag}
+                      label={tag}
+                      variant="outlined"
+                      color="primary"
+                    ></Chip>
+                  );
+                })}
+            </Box>
             <p className={bemBlocks.item("subtitle")}>
               <b>Company: </b>
               {source.company_name} <b>Date: </b>{" "}
