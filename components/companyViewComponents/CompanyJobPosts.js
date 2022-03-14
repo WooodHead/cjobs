@@ -9,31 +9,30 @@ const CompanyJobPosts = () => {
   const finalData = printData().then((final) => setFetchedData(final));
 
   return (
-    <div>
-      <Grid item sm={12} md={6}>
-        <Card className={classes.posts}>
-          <CardContent>
-            <Typography variant="overline">Job Posts</Typography>
-            <Box className={classes.posts}>
-              {fetchedData &&
-                fetchedData.hits.hits.map((data) => {
-                  return (
-                    <Card
-                      key={data._id}
-                      variant="outlined"
-                      sx={{ minWidth: 275 }}
-                      className={classes.cardItem}
-                    >
-                      <CardContent>{data._source.position_name}</CardContent>
-                    </Card>
-                  );
-                  //   return <p>{data._source.position_name}</p>;
-                })}
-            </Box>
-          </CardContent>
-        </Card>
-      </Grid>
-    </div>
+    <Grid item sm={12} md={6}>
+      <Card>
+        <CardContent>
+          <Typography variant="overline">Job Posts</Typography>
+        </CardContent>
+        <Box className={classes.posts}>
+          {fetchedData &&
+            fetchedData.hits.hits.map((data) => {
+              return (
+                <Card
+                  key={data._id}
+                  variant="outlined"
+                  sx={{ minWidth: 275 }}
+                  className={classes.cardItem}
+                >
+                  <CardContent className={classes.items}>
+                    {data._source.position_name}
+                  </CardContent>
+                </Card>
+              );
+            })}
+        </Box>
+      </Card>
+    </Grid>
   );
 };
 

@@ -31,7 +31,7 @@ const CompanyTehnologiesCategories = ({ companyInfo }) => {
           ))}
         </Box>
       </Card>
-      <Card className={classes.jobCategories}>
+      <Card>
         <CardContent>
           <Typography variant="overline">Categories</Typography>
         </CardContent>
