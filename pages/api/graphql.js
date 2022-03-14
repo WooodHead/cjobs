@@ -1,13 +1,10 @@
 import Cors from "micro-cors";
-import {ApolloServer, gql} from 'apollo-server-micro';
-import {
-  MultiMatchQuery,
-  SearchkitSchema
-} from '@searchkit/schema'
+import { ApolloServer, gql } from "apollo-server-micro";
+import { MultiMatchQuery, SearchkitSchema } from "@searchkit/schema";
 
 const searchkitConfig = {
-  host: 'http://localhost:5000/api/elasticsearch',
-  index: 'cassandra_job_posts',
+  host: `http://167.172.142.105:5000/api/elasticsearch`,
+  index: "cassandra_job_posts",
   hits: {
     fields: [
       "external_api_name",
@@ -30,17 +27,17 @@ const searchkitConfig = {
       "job_hours_type",
       "how_to_apply_html",
       "updated_at",
-    ]
+    ],
   },
   query: new MultiMatchQuery({ fields: [] }),
-  facets: []
-}
+  facets: [],
+};
 const { typeDefs, withSearchkitResolvers, context } = SearchkitSchema({
   config: searchkitConfig, // searchkit configuration
-  typeName: 'ResultSet', // type name for Searchkit Root
-  hitTypeName: 'ResultHit', // type name for each search result
-  addToQueryType: true // When true, adds a field called results to Query type
-})
+  typeName: "ResultSet", // type name for Searchkit Root
+  hitTypeName: "ResultHit", // type name for each search result
+  addToQueryType: true, // When true, adds a field called results to Query type
+});
 
 export const config = {
   api: {
