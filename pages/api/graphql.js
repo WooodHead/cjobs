@@ -55,7 +55,7 @@ const server = new ApolloServer({
       }
       type HitFields {
         external_api_name: String
-        external_api_id: Int
+        external_api_id: String
         original_post_url: String
         tags: [String]
         external_api_published_at: String
@@ -67,13 +67,13 @@ const server = new ApolloServer({
         company_logo_url: String
         external_api_verified: String
         external_api_original: String
-        external_api_updated_at: Int
+        external_api_updated_at: String
         job_post_image_url: String
         location: String
         company_url: String
         job_hours_type: String
         how_to_apply_html: String
-        updated_at: Int
+        updated_at: String
       }
       type ResultHit implements SKHit {
         id: ID!
