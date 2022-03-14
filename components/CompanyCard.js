@@ -5,15 +5,14 @@ import {
   Typography,
   Box,
   Paper,
+  CardHeader,
 } from "@material-ui/core";
 import classes from "../styles/CompanyCard.module.css";
 import printData from "../services/jobs-service";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
+const Item = styled(Paper)(() => ({
   textAlign: "center",
-  color: theme.palette.text.secondary,
   height: 60,
   lineHeight: "60px",
 }));
@@ -53,23 +52,28 @@ const CompanyCard = ({ companyInfo }) => {
       </Grid>
 
       <Grid container spacing={2}>
-        <Grid item xs={6} className={classes.informationsGrid}>
+        <Grid item xs={12} md={6}>
           <Card className={classes.jobTechnologies}>
-            <Typography variant="overline">Tehnologies</Typography>
+            <CardContent>
+              <Typography variant="overline">Tehnologies</Typography>
+            </CardContent>
+
             <Box className={classes.tehnologies}>
               {companyInfo.hits.hits[0]._source.clearbit_tech.map((item) => (
-                <Item key={item} elevation={2}>
+                <Item className={classes.items} key={item} elevation={2}>
                   {`${item}`}
                 </Item>
               ))}
             </Box>
           </Card>
           <Card className={classes.jobCategories}>
-            <Typography variant="overline">Categories</Typography>
+            <CardContent>
+              <Typography variant="overline">Categories</Typography>
+            </CardContent>
             <Box className={classes.tehnologies}>
               {companyInfo.hits.hits[0]._source.clearbit_tech_categories.map(
                 (item) => (
-                  <Item key={item} elevation={2}>
+                  <Item className={classes.items} key={item} elevation={2}>
                     {`${item}`}
                   </Item>
                 )
@@ -77,7 +81,7 @@ const CompanyCard = ({ companyInfo }) => {
             </Box>
           </Card>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item sm={12} md={6}>
           <Card className={classes.posts}>
             <CardContent>
               <Typography variant="overline">Job Posts</Typography>
@@ -94,7 +98,7 @@ const CompanyCard = ({ companyInfo }) => {
                         <CardContent>{data._source.position_name}</CardContent>
                       </Card>
                     );
-                    // return <p>{data._source.position_name}</p>;
+                    return <p>{data._source.position_name}</p>;
                   })}
               </Box>
             </CardContent>

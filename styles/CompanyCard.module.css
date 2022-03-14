@@ -10,18 +10,27 @@
   margin-bottom: 20px;
 }
 
+
 .posts {
-  max-height: 904px;
-  min-height: 904px;
+  max-height: 950px;
+  min-height: 950px;
   overflow-y: scroll;
 }
 
 .tehnologies {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  margin: 5px;
+  display: grid; 
+  grid-template-columns: 1fr 1fr;
   max-height: 400px;
   overflow-y: scroll;
+}
+
+.cardHeading {
+  margin: 10px;
+}
+
+
+.items {
+  margin: 5px 20px;
 }
 
 .informationsGrid {
@@ -35,11 +44,11 @@
 
 .cardItem {
   cursor: pointer;
-  margin-bottom: 15px;
-  min-height: 50px;
+  margin: 5px 10px;
+  /* min-height: 50px; */
   display: flex;
   align-items: center;
-  padding-left: 10px;
+  /* padding-left: 10px; */
 }
 
 .cardItem:hover {
@@ -62,6 +71,24 @@
     }
   }
 }
+
+
+@media screen and (max-width: 960px) {
+  .tehnologies {
+    display: grid; 
+    grid-template-columns: 1fr;
+    margin: 5px; 
+    max-height: 400px;
+    overflow-y: scroll;
+  }
+
+  .posts {
+    max-height: 400px;
+    min-height: 400px;
+    overflow-y: scroll;
+  }
+}
+
 
 /* .cardItem {
     cursor: pointer;
