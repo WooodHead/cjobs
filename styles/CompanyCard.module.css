@@ -11,17 +11,23 @@
 }
 
 .posts {
-  max-height: 904px;
-  min-height: 904px;
+  max-height: 950px;
+  min-height: 950px;
+
   overflow-y: scroll;
 }
 
 .tehnologies {
+
   display: grid;
   grid-template-columns: 50% 50%;
   margin: 5px;
   max-height: 400px;
   overflow-y: scroll;
+}
+
+.items {
+  margin: 5px 20px;
 }
 
 .informationsGrid {
@@ -40,6 +46,7 @@
   display: flex;
   align-items: center;
   padding-left: 10px;
+
 }
 
 .cardItem:hover {
@@ -60,6 +67,22 @@
     .cardHeader {
       display: flex;
     }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .tehnologies {
+    display: grid; 
+    grid-template-columns: 1fr;
+    margin: 5px; 
+    max-height: 400px;
+    overflow-y: scroll;
+  }
+
+  .posts {
+    max-height: 400px;
+    min-height: 400px;
+    overflow-y: scroll;
   }
 }
 
