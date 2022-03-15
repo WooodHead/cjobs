@@ -5,35 +5,29 @@ import {
   SearchkitManager,
   SearchkitProvider,
   SearchBox,
-  RefinementListFilter,
   Pagination,
   HitsStats,
   SortingSelector,
   NoHits,
   ResetFilters,
-  DynamicRangeFilter,
-  RangeFilter,
   ViewSwitcherHits,
   ViewSwitcherToggle,
   GroupedSelectedFilters,
-  InputFilter,
   Layout,
   TopBar,
   LayoutBody,
   LayoutResults,
   ActionBar,
   ActionBarRow,
-  SideBar,
 } from "searchkit";
-import { Card, CardContent, Grid, Typography, Box } from "@material-ui/core";
+import { Card, CardContent, Grid, Box } from "@material-ui/core";
 import JobDescription from "../components/JobDescription";
 import styles from "../styles/Home.module.css";
-import esEndpoint from "./api/elasticSearch"
+import esEndpoint from "./api/elasticSearch";
 const searchkit = new SearchkitManager(esEndpoint);
-const JobHitsItem = ({ bemBlocks, result, selectedJob, setSelectedJob }) => {
+const JobHitsItem = ({ bemBlocks, result, setSelectedJob }) => {
   let url = result._source.original_post_url;
   const source = extend({}, result._source, result.highlight || {});
-  // const company_search_url = `http://${host}:167.172.142.105/api/company/${source.company_name}`
   const onCardClick = (item) => {
     setSelectedJob(item);
   };
