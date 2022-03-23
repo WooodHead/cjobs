@@ -1,169 +1,222 @@
 import { extend } from "lodash";
 import { useState } from "react";
 import classes from "../styles/searchkit.module.css";
-import {
-  SearchkitManager,
-  SearchkitProvider,
-  SearchBox,
-  RefinementListFilter,
-  Pagination,
-  HitsStats,
-  SortingSelector,
-  NoHits,
-  ResetFilters,
-  DynamicRangeFilter,
-  RangeFilter,
-  ViewSwitcherHits,
-  ViewSwitcherToggle,
-  GroupedSelectedFilters,
-  InputFilter,
-  Layout,
-  TopBar,
-  LayoutBody,
-  LayoutResults,
-  ActionBar,
-  ActionBarRow,
-  SideBar,
-} from "searchkit";
-import { Card, CardContent, Grid, Typography, Box } from "@material-ui/core";
-import JobDescription from "../components/JobDescription";
 import styles from "../styles/Home.module.css";
-import esEndpoint from "./api/elasticSearch"
-const searchkit = new SearchkitManager(esEndpoint);
-const JobHitsItem = ({ bemBlocks, result, selectedJob, setSelectedJob }) => {
-  let url = result._source.original_post_url;
-  const source = extend({}, result._source, result.highlight || {});
-  // const company_search_url = `http://${host}:167.172.142.105/api/company/${source.company_name}`
+import JobDescription from "../components/JobDescription";
+import { Card, CardContent, Grid, Typography, Box } from "@material-ui/core";
+
+import { gql, useQuery } from "@apollo/client";
+import { useSearchkitVariables, withSearchkit } from "@searchkit/client";
+import withApollo from "../lib/withApollo";
+import "@elastic/eui/dist/eui_theme_light.css";
+
+import {
+  ResetSearchButton,
+  Pagination,
+  SortingSelector,
+} from "@searchkit/elastic-ui";
+
+import {
+  EuiPage,
+  EuiPageBody,
+  EuiPageContentBody,
+  EuiPageSideBar,
+  EuiHorizontalRule,
+  EuiFlexGroup,
+  // EuiPagination,
+} from "@elastic/eui";
+import SearchBox from "../components/ui/SearchBox";
+
+const QUERY = gql`
+  query resultSet(
+    $query: String
+    $filters: [SKFiltersSet]
+    $page: SKPageInput
+    $sortBy: String
+  ) {
+    results(query: $query, filters: $filters) {
+      summary {
+        total
+        appliedFilters {
+          id
+          identifier
+          display
+          label
+          ... on ValueSelectedFilter {
+            value
+          }
+        }
+        sortOptions {
+          id
+          label
+        }
+        query
+      }
+      hits(page: $page, sortBy: $sortBy) {
+        page {
+          total
+          totalPages
+          pageNumber
+          from
+          size
+        }
+        sortedBy
+        items {
+          ... on ResultHit {
+            id
+            fields {
+              external_api_name
+              external_api_id
+              original_post_url
+              tags
+              external_api_published_at
+              description
+              description_html
+              position_name
+              position_category
+              company_name
+              company_logo_url
+              external_api_verified
+              external_api_original
+              external_api_updated_at
+              job_post_image_url
+              location
+              company_url
+              job_hours_type
+              how_to_apply_html
+              updated_at
+            }
+          }
+        }
+      }
+      facets {
+        identifier
+        type
+        label
+        display
+        entries {
+          label
+          count
+        }
+      }
+    }
+  }
+`;
+
+const JobHitsItem = ({ result, selectedJob, setSelectedJob }) => {
   const onCardClick = (item) => {
-    setSelectedJob(item);
+    console.log(selectedJob);
+    if (selectedJob && selectedJob.external_api_id === item.external_api_id) {
+      setSelectedJob(null);
+    } else {
+      setSelectedJob(item);
+    }
   };
   return (
     <Card
       variant="outlined"
-      onClick={() => onCardClick(source)}
+      onClick={() => onCardClick(result)}
       className={classes.cardItem}
       sx={{ minWidth: 275 }}
     >
-      <Box
-        className={bemBlocks.item().mix(bemBlocks.container("item"))}
-        data-qa="hit"
-      >
+      <Box data-qa="hit">
         <CardContent>
-          <Box className={bemBlocks.item("details")}>
-            <h2 className={bemBlocks.item("title")}>{source.position_name}</h2>
-            <p className={bemBlocks.item("subtitle")}>
-              <b>Company: </b>
-              {source.company_name} <b>Date: </b>{" "}
-              {source.external_api_published_at} <b>Tags: </b>{" "}
-              {source.tags && source.tags.join(", ")} <b>Category: </b>{" "}
-              {source.position_category}
-            </p>
+          <Box>
+            <Typography paragraph variant="h5">
+              {result.position_name}
+            </Typography>
+            <Typography component="ul" className={classes.cardContent}>
+              <Typography variant="h6" component="li" gutterBottom>
+                <b>Company:</b> {result.company_name}
+              </Typography>
+              <Typography variant="h6" component="li" gutterBottom>
+                <b>Date:</b> {result.external_api_published_at}
+              </Typography>
+              <Typography variant="h6" component="li" gutterBottom>
+                <b>Tags:</b> {result.tags && result.tags.join(", ")}
+              </Typography>
+              <Typography variant="h6" component="li" gutterBottom>
+                <b>Category:</b> {result.position_category}
+              </Typography>
+            </Typography>
           </Box>
         </CardContent>
       </Box>
     </Card>
   );
 };
-export default function Cassandra() {
+
+const Index = () => {
+  // const [activePage, setActivePage] = useState(0);
+  // const Facets = FacetsList([]);
   const [selectedJob, setSelectedJob] = useState(null);
-  const jobItem = (
-    <JobHitsItem setSelectedJob={setSelectedJob} selectedJob={selectedJob} />
-  );
+  const variables = useSearchkitVariables();
+  const {
+    previousData,
+    data = previousData,
+    loading,
+  } = useQuery(QUERY, {
+    variables,
+  });
+
+  console.log(data);
+
+  if (!data) {
+    return <h1>loading...</h1>;
+  }
   return (
-    <SearchkitProvider searchkit={searchkit}>
-      <Layout className={classes.sk_layout}>
-        <TopBar>
-          <SearchBox
-            autofocus={true}
-            searchOnChange={true}
-            prefixQueryFields={["description^1"]}
-            mod={`${classes.sk_search_box__action} ${classes.searchBox}`}
-          />
-        </TopBar>
-        <LayoutBody>
-          <LayoutResults>
-            <ActionBar>
-              <ActionBarRow>
-                <HitsStats
-                  mod={classes.sk_hits_stats}
-                  translations={{
-                    "hitstats.results_found": "{hitCount} results found",
-                  }}
-                />
-                <ViewSwitcherToggle mod={classes.sk_view_switcher} />
-                <SortingSelector
-                  mod={`${classes.sk_sorting_selector} `}
-                  options={[
-                    { label: "Relevance", field: "_score", order: "desc" },
-                    {
-                      label: "Latest Releases",
-                      field: "external_api_published_at",
-                      order: "desc",
-                    },
-                    {
-                      label: "Earliest Releases",
-                      field: "external_api_published_at",
-                      order: "asc",
-                    },
-                  ]}
-                />
-              </ActionBarRow>
-              <ActionBarRow>
-                <GroupedSelectedFilters />
-                <ResetFilters mod={classes.sk_reset_filters} />
-              </ActionBarRow>
-            </ActionBar>
+    <EuiPage style={{ paddingTop: "60px", width: "100%", height: "100vh" }}>
+      <EuiPageSideBar>
+        <SearchBox />
+        {/* <Facets data={data?.results} loading={loading} /> */}
+        <SortingSelector data={data?.results} loading={loading} />
+        <EuiHorizontalRule margin="m" />
+        <ResetSearchButton loading={loading} />
+      </EuiPageSideBar>
+      <EuiPageBody>
+        {data.results.summary.total !== 0 ? (
+          <EuiPageContentBody>
             <Grid container spacing={2} className={styles.jobsContainer}>
               <Grid
                 xs={6}
                 item
                 className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}
               >
-                <ViewSwitcherHits
-                  mod={`${classes.sk_hits_list}`}
-                  hitsPerPage={12}
-                  sourceFilter={[
-                    "external_api_name",
-                    "external_api_id",
-                    "original_post_url",
-                    "tags",
-                    "external_api_published_at",
-                    "description",
-                    "description_html",
-                    "position_name",
-                    "position_category",
-                    "company_name",
-                    "company_logo_url",
-                    "external_api_verified",
-                    "external_api_original",
-                    "external_api_updated_at",
-                    "job_post_image_url",
-                    "location",
-                    "company_url",
-                    "job_hours_type",
-                    "how_to_apply_html",
-                    "updated_at",
-                  ]}
-                  hitComponents={[
-                    {
-                      key: "list",
-                      title: "List",
-                      itemComponent: jobItem,
-                      defaultOption: true,
-                    },
-                  ]}
-                  scrollTo="body"
-                />
+                {data.results.hits.items.map((item) => {
+                  return (
+                    <JobHitsItem
+                      result={item.fields}
+                      selectedJob={selectedJob}
+                      setSelectedJob={setSelectedJob}
+                    />
+                  );
+                })}
               </Grid>
               <Grid xs={6} item>
                 <JobDescription job={selectedJob} />
               </Grid>
             </Grid>
-            <NoHits suggestionsField={"position_name"} />
-            <Pagination showNumbers={true} />
-          </LayoutResults>
-        </LayoutBody>
-      </Layout>
-    </SearchkitProvider>
+            <EuiFlexGroup justifyContent="center">
+              <Grid className={classes.paginationContainer}>
+                {/* <EuiPagination
+                  compressed
+                  data={data?.results}
+                  pageCount={data.results.hits.page.totalPages}
+                  activePage={activePage}
+                  onPageClick={(activePage) => setActivePage(activePage)}
+                /> */}
+                <Pagination data={data?.results} />
+              </Grid>
+            </EuiFlexGroup>
+          </EuiPageContentBody>
+        ) : (
+          <Typography paragraph variant="h5">
+            No results found
+          </Typography>
+        )}
+      </EuiPageBody>
+    </EuiPage>
   );
-}
+};
+
+export default withApollo(withSearchkit(Index));

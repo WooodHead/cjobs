@@ -1,13 +1,15 @@
 import Cors from "micro-cors";
-import {ApolloServer, gql} from 'apollo-server-micro';
+import { ApolloServer, gql } from "apollo-server-micro";
 import {
-  MultiMatchQuery,
-  SearchkitSchema
-} from '@searchkit/schema'
+  // MultiMatchQuery,
+  SearchkitSchema,
+  // TermFilter,
+} from "@searchkit/schema";
+import { DateRangeFacet, MultiMatchQuery } from "@searchkit/sdk";
+export const searchkitConfig = {
+  host: "http://167.172.142.105:5000/api/elasticsearch",
+  index: "cassandra_job_posts",
 
-const searchkitConfig = {
-  host: 'http://167.172.142.105:5000/api/elasticsearch',
-  index: 'cassandra_job_posts',
   hits: {
     fields: [
       "external_api_name",
@@ -32,15 +34,36 @@ const searchkitConfig = {
       "updated_at",
     ]
   },
-  query: new MultiMatchQuery({ fields: [] }),
-  facets: []
-}
+  sortOptions: [
+    {
+      id: "relevance",
+      label: "Relevance",
+      field: [{ _score: "desc" }],
+      // order: "desc",
+    },
+    {
+      id: "latest",
+      label: "latest",
+      field: [{ external_api_published_at: "desc" }],
+      // order: "desc",
+    },
+    {
+      id: "earliest",
+      label: "earliest",
+      field: [{ external_api_published_at: "asc" }],
+      // order: "asc",
+    },
+  ],
+  query: new MultiMatchQuery({ fields: ["position_name^1"] }),
+  facets: [],
+};
 const { typeDefs, withSearchkitResolvers, context } = SearchkitSchema({
   config: searchkitConfig, // searchkit configuration
-  typeName: 'ResultSet', // type name for Searchkit Root
-  hitTypeName: 'ResultHit', // type name for each search result
-  addToQueryType: true // When true, adds a field called results to Query type
-})
+  typeName: "ResultSet", // type name for Searchkit Root
+  hitTypeName: "ResultHit", // type name for each search result
+  addToQueryType: true, // When true, adds a field called results to Query type
+});
+
 
 export const config = {
   api: {
@@ -105,3 +128,4 @@ export default cors(async (req, res) => {
   await startServer;
   await server.createHandler({ path: "/api/graphql" })(req, res);
 });
+
