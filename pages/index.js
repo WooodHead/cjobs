@@ -61,6 +61,7 @@ const QUERY = gql`
               position_name
               position_category
               company_name
+              external_api_id
             }
           }
         }
@@ -88,8 +89,7 @@ const JobHitsItem = ({
       variant="outlined"
       onClick={() => onCardClick(result)}
       className={classes.cardItem}
-      sx={{ minWidth: 275 }}
-    >
+      sx={{ minWidth: 275 }}>
       <Box data-qa="hit">
         <CardContent>
           <Box>
@@ -136,7 +136,6 @@ const Index = () => {
     }
   }, [data]);
 
-
   if (!data) {
     return <h1>loading...</h1>;
   }
@@ -156,11 +155,11 @@ const Index = () => {
               <Grid
                 xs={6}
                 item
-                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}
-              >
+                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}>
                 {data.results.hits.items.map((item) => {
                   return (
                     <JobHitsItem
+                      key={item.fields.external_api_id}
                       result={item.fields}
                       selectedJob={selectedJob}
                       setSelectedJob={setSelectedJob}
