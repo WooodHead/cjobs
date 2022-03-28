@@ -1,5 +1,5 @@
 import { extend } from "lodash";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classes from "../styles/searchkit.module.css";
 import styles from "../styles/Home.module.css";
 import JobDescription from "../components/JobDescription";
@@ -69,7 +69,12 @@ const QUERY = gql`
   }
 `;
 
-const JobHitsItem = ({ result, selectedJob, setSelectedJob }) => {
+const JobHitsItem = ({
+  result,
+  selectedJob,
+  setSelectedJob,
+  setIsCardClicked,
+}) => {
   const onCardClick = (item) => {
     console.log(selectedJob);
     if (selectedJob && selectedJob.external_api_id === item.external_api_id) {
@@ -124,10 +129,18 @@ const Index = () => {
   } = useQuery(QUERY, {
     variables,
   });
-  
+
+  useEffect(() => {
+    if (selectedJob) {
+      setSelectedJob(null);
+    }
+  }, [data]);
+
+
   if (!data) {
     return <h1>loading...</h1>;
   }
+
   return (
     <EuiPage style={{ paddingTop: "60px", width: "100%", height: "100vh" }}>
       <EuiPageSideBar>
