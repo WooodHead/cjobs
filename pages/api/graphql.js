@@ -9,7 +9,6 @@ import { DateRangeFacet, MultiMatchQuery } from "@searchkit/sdk";
 export const searchkitConfig = {
   host: "http://167.172.142.105:5000/api/elasticsearch",
   index: "cassandra_job_posts",
-
   hits: {
     fields: [
       "external_api_name",
@@ -52,7 +51,6 @@ export const searchkitConfig = {
     },
   ],
   query: new MultiMatchQuery({ fields: ["position_name^1"] }),
-
 };
 const { typeDefs, withSearchkitResolvers, context } = SearchkitSchema({
   config: searchkitConfig, // searchkit configuration
@@ -60,7 +58,6 @@ const { typeDefs, withSearchkitResolvers, context } = SearchkitSchema({
   hitTypeName: "ResultHit", // type name for each search result
   addToQueryType: true, // When true, adds a field called results to Query type
 });
-
 
 export const config = {
   api: {
@@ -125,4 +122,3 @@ export default cors(async (req, res) => {
   await startServer;
   await server.createHandler({ path: "/api/graphql" })(req, res);
 });
-

@@ -1,4 +1,5 @@
 import { Card, CardContent, Grid, Typography } from "@material-ui/core";
+import Link from "next/link";
 import CardHeader from "@material-ui/core/CardHeader";
 import classes from "../styles/JobDescription.module.css";
 
@@ -11,7 +12,10 @@ const JobDescription = ({ job }) => {
             <CardHeader title="Summary" />
             <CardContent>
               <Typography sx={{ mb: 1.5 }} color="secondary" component="div">
-                Company Name: {job.company_name}
+                Company Name:{" "}
+                <Link href={`company-view/${job.company_name}`}>
+                  <a>{job.company_name}</a>
+                </Link>
               </Typography>
               <Typography color="gray">
                 Position Name: {job.position_name}

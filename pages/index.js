@@ -76,6 +76,7 @@ const JobHitsItem = ({
   setSelectedJob,
   setIsCardClicked,
 }) => {
+
   const onCardClick = (item) => {
     console.log(selectedJob);
     if (selectedJob && selectedJob.external_api_id === item.external_api_id) {
