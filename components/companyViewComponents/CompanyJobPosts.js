@@ -1,6 +1,5 @@
 import { Card, CardContent, Grid, Typography, Box } from "@material-ui/core";
 import classes from "../../styles/CompanyCard.module.css";
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 

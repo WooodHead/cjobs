@@ -17,9 +17,8 @@ const JobDescription = ({ job }) => {
                   <a>{job.company_name}</a>
                 </Link>
               </Typography>
-              <Typography variant="body1" color="gray">
-                Position Name:
-                {job.position_name}
+              <Typography color="gray">
+                Position Name: {job.position_name}
               </Typography>
             </CardContent>
           </Card>
