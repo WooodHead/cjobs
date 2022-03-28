@@ -39,23 +39,20 @@ export const searchkitConfig = {
       id: "relevance",
       label: "Relevance",
       field: [{ _score: "desc" }],
-      // order: "desc",
     },
     {
       id: "latest",
       label: "latest",
       field: [{ external_api_published_at: "desc" }],
-      // order: "desc",
     },
     {
       id: "earliest",
       label: "earliest",
       field: [{ external_api_published_at: "asc" }],
-      // order: "asc",
     },
   ],
   query: new MultiMatchQuery({ fields: ["position_name^1"] }),
-  facets: [],
+
 };
 const { typeDefs, withSearchkitResolvers, context } = SearchkitSchema({
   config: searchkitConfig, // searchkit configuration

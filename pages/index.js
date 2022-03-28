@@ -9,7 +9,7 @@ import { gql, useQuery } from "@apollo/client";
 import { useSearchkitVariables, withSearchkit } from "@searchkit/client";
 import withApollo from "../lib/withApollo";
 import "@elastic/eui/dist/eui_theme_light.css";
-
+import { useSearchkit } from "@searchkit/client";
 import {
   ResetSearchButton,
   Pagination,
@@ -23,7 +23,7 @@ import {
   EuiPageSideBar,
   EuiHorizontalRule,
   EuiFlexGroup,
-  // EuiPagination,
+  EuiPagination,
 } from "@elastic/eui";
 import SearchBox from "../components/ui/SearchBox";
 
@@ -37,20 +37,10 @@ const QUERY = gql`
     results(query: $query, filters: $filters) {
       summary {
         total
-        appliedFilters {
-          id
-          identifier
-          display
-          label
-          ... on ValueSelectedFilter {
-            value
-          }
-        }
         sortOptions {
           id
           label
         }
-        query
       }
       hits(page: $page, sortBy: $sortBy) {
         page {
@@ -65,38 +55,14 @@ const QUERY = gql`
           ... on ResultHit {
             id
             fields {
-              external_api_name
-              external_api_id
-              original_post_url
-              tags
               external_api_published_at
               description
               description_html
               position_name
               position_category
               company_name
-              company_logo_url
-              external_api_verified
-              external_api_original
-              external_api_updated_at
-              job_post_image_url
-              location
-              company_url
-              job_hours_type
-              how_to_apply_html
-              updated_at
             }
           }
-        }
-      }
-      facets {
-        identifier
-        type
-        label
-        display
-        entries {
-          label
-          count
         }
       }
     }
@@ -147,7 +113,7 @@ const JobHitsItem = ({ result, selectedJob, setSelectedJob }) => {
 };
 
 const Index = () => {
-  // const [activePage, setActivePage] = useState(0);
+  const api = useSearchkit();
   // const Facets = FacetsList([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const variables = useSearchkitVariables();
@@ -158,9 +124,7 @@ const Index = () => {
   } = useQuery(QUERY, {
     variables,
   });
-
-  console.log(data);
-
+  
   if (!data) {
     return <h1>loading...</h1>;
   }
@@ -168,7 +132,6 @@ const Index = () => {
     <EuiPage style={{ paddingTop: "60px", width: "100%", height: "100vh" }}>
       <EuiPageSideBar>
         <SearchBox />
-        {/* <Facets data={data?.results} loading={loading} /> */}
         <SortingSelector data={data?.results} loading={loading} />
         <EuiHorizontalRule margin="m" />
         <ResetSearchButton loading={loading} />
@@ -199,11 +162,21 @@ const Index = () => {
             <EuiFlexGroup justifyContent="center">
               <Grid className={classes.paginationContainer}>
                 {/* <EuiPagination
-                  compressed
-                  data={data?.results}
                   pageCount={data.results.hits.page.totalPages}
-                  activePage={activePage}
-                  onPageClick={(activePage) => setActivePage(activePage)}
+                  activePage={data?.results.hits.page.pageNumber}
+                  onPageClick={(activePage) => {
+                    api.setPage({
+                      size: data.results.hits.page.size,
+                      from: activePage * data.results.hits.page.size,
+                    });
+                    api.search();
+                    console.log("Data", data.results.hits);
+                    console.log("Active page", activePage);
+                    console.log(
+                      "total pages",
+                      data.results.hits.page.totalPages
+                    );
+                  }}
                 /> */}
                 <Pagination data={data?.results} />
               </Grid>
