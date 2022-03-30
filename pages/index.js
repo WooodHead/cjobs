@@ -14,6 +14,7 @@ import {
   ResetSearchButton,
   Pagination,
   SortingSelector,
+  FacetsList,
 } from "@searchkit/elastic-ui";
 
 import {
@@ -24,6 +25,7 @@ import {
   EuiHorizontalRule,
   EuiFlexGroup,
   EuiPagination,
+  EuiFacetButton,
 } from "@elastic/eui";
 import SearchBox from "../components/ui/SearchBox";
 
@@ -66,6 +68,16 @@ const QUERY = gql`
           }
         }
       }
+      facets {
+        identifier
+        type
+        label
+        display
+        entries {
+          label
+          count
+        }
+      }
     }
   }
 `;
@@ -89,7 +101,8 @@ const JobHitsItem = ({
       variant="outlined"
       onClick={() => onCardClick(result)}
       className={classes.cardItem}
-      sx={{ minWidth: 275 }}>
+      sx={{ minWidth: 275 }}
+    >
       <Box data-qa="hit">
         <CardContent>
           <Box>
@@ -116,7 +129,7 @@ const JobHitsItem = ({
 
 const Index = () => {
   const api = useSearchkit();
-  // const Facets = FacetsList([]);
+  const Facets = FacetsList([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const variables = useSearchkitVariables();
   const {
@@ -143,6 +156,9 @@ const Index = () => {
         <SearchBox />
         <SortingSelector data={data?.results} loading={loading} />
         <EuiHorizontalRule margin="m" />
+        <Grid className={classes.facets}>
+          <Facets loading={loading} data={data?.results} />
+        </Grid>
         <ResetSearchButton loading={loading} />
       </EuiPageSideBar>
       <EuiPageBody>
@@ -152,7 +168,8 @@ const Index = () => {
               <Grid
                 xs={6}
                 item
-                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}>
+                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}
+              >
                 {data.results.hits.items.map((item) => {
                   return (
                     <JobHitsItem

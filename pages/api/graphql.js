@@ -5,7 +5,12 @@ import {
   SearchkitSchema,
   // TermFilter,
 } from "@searchkit/schema";
-import { DateRangeFacet, MultiMatchQuery } from "@searchkit/sdk";
+import {
+  DateRangeFacet,
+  MultiMatchQuery,
+  RefinementSelectFacet,
+} from "@searchkit/sdk";
+import "../../styles/Home.module.css";
 export const searchkitConfig = {
   host: "http://167.172.142.105:5000/api/elasticsearch",
   index: "cassandra_job_posts",
@@ -50,7 +55,15 @@ export const searchkitConfig = {
       field: [{ external_api_published_at: "asc" }],
     },
   ],
+
   query: new MultiMatchQuery({ fields: ["position_name^1", "description^2"] }),
+  facets: [
+    new RefinementSelectFacet({
+      field: "tags",
+      identifier: "tags",
+      label: "Tags",
+    }),
+  ],
 };
 const { typeDefs, withSearchkitResolvers, context } = SearchkitSchema({
   config: searchkitConfig, // searchkit configuration
