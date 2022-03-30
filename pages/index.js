@@ -76,7 +76,6 @@ const JobHitsItem = ({
   setSelectedJob,
   setIsCardClicked,
 }) => {
-
   const onCardClick = (item) => {
     console.log(selectedJob);
     if (selectedJob && selectedJob.external_api_id === item.external_api_id) {
@@ -103,9 +102,6 @@ const JobHitsItem = ({
               </Typography>
               <Typography variant="h6" component="li" gutterBottom>
                 <b>Date:</b> {result.external_api_published_at}
-              </Typography>
-              <Typography variant="h6" component="li" gutterBottom>
-                <b>Tags:</b> {result.tags && result.tags.join(", ")}
               </Typography>
               <Typography variant="h6" component="li" gutterBottom>
                 <b>Category:</b> {result.position_category}

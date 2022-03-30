@@ -31,7 +31,7 @@ export const searchkitConfig = {
       "job_hours_type",
       "how_to_apply_html",
       "updated_at",
-    ]
+    ],
   },
   sortOptions: [
     {
@@ -50,7 +50,7 @@ export const searchkitConfig = {
       field: [{ external_api_published_at: "asc" }],
     },
   ],
-  query: new MultiMatchQuery({ fields: ["position_name^1"] }),
+  query: new MultiMatchQuery({ fields: ["position_name^1", "description^2"] }),
 };
 const { typeDefs, withSearchkitResolvers, context } = SearchkitSchema({
   config: searchkitConfig, // searchkit configuration
