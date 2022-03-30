@@ -14,6 +14,7 @@ import {
   ResetSearchButton,
   Pagination,
   SortingSelector,
+  FacetsList,
 } from "@searchkit/elastic-ui";
 
 import {
@@ -24,6 +25,7 @@ import {
   EuiHorizontalRule,
   EuiFlexGroup,
   EuiPagination,
+  EuiFacetButton,
 } from "@elastic/eui";
 import SearchBox from "../components/ui/SearchBox";
 
@@ -64,6 +66,16 @@ const QUERY = gql`
               external_api_id
             }
           }
+        }
+      }
+      facets {
+        identifier
+        type
+        label
+        display
+        entries {
+          label
+          count
         }
       }
     }
@@ -117,7 +129,7 @@ const JobHitsItem = ({
 
 const Index = () => {
   const api = useSearchkit();
-  // const Facets = FacetsList([]);
+  const Facets = FacetsList([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const variables = useSearchkitVariables();
   const {
@@ -144,6 +156,9 @@ const Index = () => {
         <SearchBox />
         <SortingSelector data={data?.results} loading={loading} />
         <EuiHorizontalRule margin="m" />
+        <Grid className={classes.facets}>
+          <Facets loading={loading} data={data?.results} />
+        </Grid>
         <ResetSearchButton loading={loading} />
       </EuiPageSideBar>
       <EuiPageBody>

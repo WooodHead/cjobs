@@ -28,3 +28,10 @@
   list-style-type: none;
   padding-left: 0;
 }
+
+.facets button {
+  border: none;
+  background-color: white;
+  margin-bottom: 10px !important;
+  padding: 5px 0;
+}
