@@ -105,9 +105,6 @@ const JobHitsItem = ({
                 <b>Date:</b> {result.external_api_published_at}
               </Typography>
               <Typography variant="h6" component="li" gutterBottom>
-                <b>Tags:</b> {result.tags && result.tags.join(", ")}
-              </Typography>
-              <Typography variant="h6" component="li" gutterBottom>
                 <b>Category:</b> {result.position_category}
               </Typography>
             </Typography>
