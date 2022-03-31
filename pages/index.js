@@ -28,58 +28,91 @@ import {
 } from "@elastic/eui";
 import SearchBox from "../components/ui/SearchBox";
 
-const QUERY = gql`
-  query resultSet(
-    $query: String
-    $filters: [SKFiltersSet]
-    $page: SKPageInput
-    $sortBy: String
-  ) {
-    results(query: $query, filters: $filters) {
-      summary {
-        total
-        sortOptions {
-          id
-          label
-        }
-      }
-      hits(page: $page, sortBy: $sortBy) {
-        page {
-          total
-          totalPages
-          pageNumber
-          from
-          size
-        }
-        sortedBy
-        items {
-          ... on ResultHit {
-            id
-            fields {
-              external_api_published_at
-              description
-              description_html
-              position_name
-              position_category
-              company_name
-              external_api_id
-            }
-          }
-        }
-      }
-      facets {
-        identifier
-        type
-        label
-        display
-        entries {
-          label
-          count
-        }
-      }
-    }
-  }
-`;
+// const QUERY = gql`
+//   query Location($page: SKPageInput) {
+//     location {
+//       hits(page: $page) {
+//         items {
+//           ... on LocationResultHit {
+//             fields {
+//               city
+//             }
+//           }
+//         }
+//       }
+//     }
+//     results {
+//       hits(page: $page) {
+//         items {
+//           ... on ResultHit {
+//             fields {
+//               company_name
+//             }
+//           }
+//         }
+//         page {
+//           totalPages
+//           pageNumber
+//           from
+//           size
+//         }
+//       }
+//     }
+//   }
+// `;
+
+// const QUERY = gql`
+//   query resultSet(
+//     $query: String
+//     $filters: [SKFiltersSet]
+//     $page: SKPageInput
+//     $sortBy: String
+//   ) {
+//     results(query: $query, filters: $filters) {
+//       summary {
+//         total
+//         sortOptions {
+//           id
+//           label
+//         }
+//       }
+//       hits(page: $page, sortBy: $sortBy) {
+//         page {
+//           total
+//           totalPages
+//           pageNumber
+//           from
+//           size
+//         }
+//         sortedBy
+//         items {
+//           ... on ResultHit {
+//             id
+//             fields {
+//               external_api_published_at
+//               description
+//               description_html
+//               position_name
+//               position_category
+//               company_name
+//               external_api_id
+//             }
+//           }
+//         }
+//       }
+//       facets {
+//         identifier
+//         type
+//         label
+//         display
+//         entries {
+//           label
+//           count
+//         }
+//       }
+//     }
+//   }
+// `;
 
 const JobHitsItem = ({
   result,
