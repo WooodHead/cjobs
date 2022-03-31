@@ -1,27 +1,30 @@
 .companyWrapper {
-  width: 80%;
-  margin: auto;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
 .cardHeader {
   margin-bottom: 20px;
 }
 
+.heading {
+  font-size: 18px;
+}
+
+.posts {
+  max-height: 400px;
+  min-height: 400px;
+  overflow-y: scroll;
+}
+
 .jobTechnologies {
   margin-bottom: 20px;
 }
 
-.posts {
-  max-height: 900px;
-  min-height: 900px;
-  overflow-y: scroll;
-  padding: 5px;
-  margin: 5px;
-}
-
 .tehnologies {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 1fr;
+  margin: 5px;
   max-height: 400px;
   overflow-y: scroll;
 }
@@ -44,7 +47,7 @@
   margin-bottom: 10px;
   min-height: 50px;
   display: flex;
-  align-items: center; 
+  align-items: center;
   padding-left: 10px;
 }
 
@@ -57,34 +60,23 @@
   color: white;
 }
 
-@media screen and (max-width: 1250px) {
+@media screen and (min-width: 960px) {
   .tehnologies {
-    display: grid; 
-    grid-template-columns: 1fr;
-    margin: 5px; 
-    max-height: 400px;
-    overflow-y: scroll;
-  }
-}
-
-@media screen and (min-width: 850px) {
-  .cardHeader {
-    display: flex;
-  }
-}
-
-@media screen and (max-width: 960px) {
-  .tehnologies {
-    display: grid; 
-    grid-template-columns: 1fr;
-    margin: 5px; 
+    display: grid;
+    grid-template-columns: 50% 50%;
     max-height: 400px;
     overflow-y: scroll;
   }
 
   .posts {
-    max-height: 400px;
-    min-height: 400px;
+    max-height: 900px;
+    min-height: 900px;
     overflow-y: scroll;
+    padding: 5px;
+    margin: 5px;
+  }
+
+  .cardHeader {
+    display: flex;
   }
 }
