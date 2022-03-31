@@ -186,8 +186,12 @@ const Index = () => {
             </Grid>
             <EuiFlexGroup justifyContent="center">
               <Grid className={classes.paginationContainer}>
-                {/* <EuiPagination
-                  pageCount={data.results.hits.page.totalPages}
+                <EuiPagination
+                  pageCount={
+                    data.results.hits.page.totalPages > 1000
+                      ? 1000
+                      : data.results.hits.page.totalPages
+                  }
                   activePage={data?.results.hits.page.pageNumber}
                   onPageClick={(activePage) => {
                     api.setPage({
@@ -195,15 +199,8 @@ const Index = () => {
                       from: activePage * data.results.hits.page.size,
                     });
                     api.search();
-                    console.log("Data", data.results.hits);
-                    console.log("Active page", activePage);
-                    console.log(
-                      "total pages",
-                      data.results.hits.page.totalPages
-                    );
                   }}
-                /> */}
-                <Pagination data={data?.results} />
+                />
               </Grid>
             </EuiFlexGroup>
           </EuiPageContentBody>
