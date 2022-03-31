@@ -11,6 +11,7 @@ import {
   RefinementSelectFacet,
 } from "@searchkit/sdk";
 import "../../styles/Home.module.css";
+
 export const searchkitConfig = {
   host: "http://167.172.142.105:5000/api/elasticsearch",
   index: "cassandra_job_posts",

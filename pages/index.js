@@ -25,7 +25,6 @@ import {
   EuiHorizontalRule,
   EuiFlexGroup,
   EuiPagination,
-  EuiFacetButton,
 } from "@elastic/eui";
 import SearchBox from "../components/ui/SearchBox";
 
