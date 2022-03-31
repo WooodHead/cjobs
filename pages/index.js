@@ -61,58 +61,99 @@ import SearchBox from "../components/ui/SearchBox";
 //   }
 // `;
 
-// const QUERY = gql`
-//   query resultSet(
-//     $query: String
-//     $filters: [SKFiltersSet]
-//     $page: SKPageInput
-//     $sortBy: String
-//   ) {
-//     results(query: $query, filters: $filters) {
-//       summary {
-//         total
-//         sortOptions {
-//           id
-//           label
-//         }
-//       }
-//       hits(page: $page, sortBy: $sortBy) {
-//         page {
-//           total
-//           totalPages
-//           pageNumber
-//           from
-//           size
-//         }
-//         sortedBy
-//         items {
-//           ... on ResultHit {
-//             id
-//             fields {
-//               external_api_published_at
-//               description
-//               description_html
-//               position_name
-//               position_category
-//               company_name
-//               external_api_id
-//             }
-//           }
-//         }
-//       }
-//       facets {
-//         identifier
-//         type
-//         label
-//         display
-//         entries {
-//           label
-//           count
-//         }
-//       }
-//     }
-//   }
-// `;
+const QUERY = gql`
+  query Results(
+    $page: SKPageInput
+    $filters: [SKFiltersSet]
+    $query: String
+    $sortBy: String
+    $hitsPage2: SKPageInput
+    $locationQuery2: String
+    $hitsPage3: SKPageInput
+    $hitsSortBy2: String
+  ) {
+    results(page: $page, filters: $filters, query: $query) {
+      summary {
+        total
+        sortOptions {
+          id
+          label
+        }
+      }
+      hits(sortBy: $sortBy, page: $hitsPage2) {
+        page {
+          total
+          totalPages
+          pageNumber
+          from
+          size
+        }
+        sortedBy
+        items {
+          ... on ResultHit {
+            id
+            fields {
+              company_name
+              description
+              description_html
+              external_api_published_at
+              position_category
+              position_name
+              external_api_id
+            }
+          }
+        }
+      }
+      facets {
+        identifier
+        label
+        type
+        display
+        entries {
+          label
+          count
+        }
+      }
+    }
+    location(query: $locationQuery2) {
+      summary {
+        total
+        sortOptions {
+          id
+          label
+        }
+      }
+      hits(page: $hitsPage3, sortBy: $hitsSortBy2) {
+        page {
+          total
+          totalPages
+          pageNumber
+          from
+          size
+        }
+        sortedBy
+        items {
+          ... on LocationResultHit {
+            id
+            fields {
+              city
+            }
+          }
+        }
+      }
+      facets {
+        identifier
+        label
+        type
+        display
+        entries {
+          label
+          count
+        }
+      }
+    }
+  }
+`;
 
 const JobHitsItem = ({
   result,
@@ -133,8 +174,7 @@ const JobHitsItem = ({
       variant="outlined"
       onClick={() => onCardClick(result)}
       className={classes.cardItem}
-      sx={{ minWidth: 275 }}
-    >
+      sx={{ minWidth: 275 }}>
       <Box data-qa="hit">
         <CardContent>
           <Box>
@@ -178,6 +218,8 @@ const Index = () => {
     }
   }, [data]);
 
+  console.log(data);
+
   if (!data) {
     return <h1>loading...</h1>;
   }
@@ -190,6 +232,7 @@ const Index = () => {
         <EuiHorizontalRule margin="m" />
         <Grid className={classes.facets}>
           <Facets loading={loading} data={data?.results} />
+          <Facets loading={loading} data={data?.location} />
         </Grid>
         <ResetSearchButton loading={loading} />
       </EuiPageSideBar>
@@ -200,8 +243,7 @@ const Index = () => {
               <Grid
                 xs={6}
                 item
-                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}
-              >
+                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}>
                 {data.results.hits.items.map((item) => {
                   return (
                     <JobHitsItem

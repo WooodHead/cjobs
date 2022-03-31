@@ -8,6 +8,7 @@ import {
 } from "@searchkit/schema";
 import {
   DateRangeFacet,
+  HierarchicalMenuFacet,
   MultiMatchQuery,
   RefinementSelectFacet,
 } from "@searchkit/sdk";
@@ -66,6 +67,11 @@ export const postSearchConfig = {
       identifier: "tags",
       label: "Tags",
     }),
+    new RefinementSelectFacet({
+      field: "external_api_updated_at",
+      identifier: "external_api_updated_at",
+      label: "external_api_updated_at",
+    }),
   ],
 };
 
@@ -73,14 +79,21 @@ export const locationSearchConfig = {
   host: "http://167.172.142.105:5000/api/elasticsearch",
   index: "companies",
   hits: {
-    fields: ["city"],
+    fields: [
+      "city",
+      "clearbit_tags",
+      "state_code",
+      "clearbit_indexed_at",
+      "clearbit_sic_code",
+      "clearbit_id",
+      "name",
+    ],
   },
-  query: new MultiMatchQuery({ fields: ["city"] }),
   facets: [
     new RefinementSelectFacet({
-      field: "city",
-      identifier: "city",
-      label: "City",
+      field: "clearbit_tags",
+      identifier: "clearbit_tags",
+      label: "clearbit_tags",
     }),
   ],
 };
@@ -96,6 +109,7 @@ const { typeDefs, withSearchkitResolvers, context } = SearchkitSchema([
     config: locationSearchConfig,
     typeName: "LocationResultSet",
     hitTypeName: "LocationResultHit",
+    addToQueryType: false,
   },
 ]);
 
@@ -104,6 +118,7 @@ const combinedTyoeDefs = [
     type Query {
       root: String
     }
+
     type HitFields {
       external_api_name: String
       external_api_id: String
@@ -126,6 +141,7 @@ const combinedTyoeDefs = [
       how_to_apply_html: String
       updated_at: String
     }
+
     type ResultHit implements SKHit {
       id: ID!
       fields: HitFields
@@ -134,11 +150,15 @@ const combinedTyoeDefs = [
 
     type LocationHitFields {
       city: String
+      clearbit_tags: [String]
+      state_code: String
+      name: String
     }
 
     type LocationResultHit implements SKHit {
       id: ID!
       fields: LocationHitFields
+      customField: String
     }
 
     extend type Query {
