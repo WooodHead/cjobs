@@ -25,7 +25,6 @@ import {
   EuiHorizontalRule,
   EuiFlexGroup,
   EuiPagination,
-  EuiFacetButton,
 } from "@elastic/eui";
 import SearchBox from "../components/ui/SearchBox";
 
@@ -88,6 +87,7 @@ const JobHitsItem = ({
   setSelectedJob,
   setIsCardClicked,
 }) => {
+
   const onCardClick = (item) => {
     console.log(selectedJob);
     if (selectedJob && selectedJob.external_api_id === item.external_api_id) {
