@@ -5,10 +5,17 @@ import {
   SearchkitSchema,
   // TermFilter,
 } from "@searchkit/schema";
-import { DateRangeFacet, MultiMatchQuery } from "@searchkit/sdk";
+import {
+  DateRangeFacet,
+  MultiMatchQuery,
+  RefinementSelectFacet,
+} from "@searchkit/sdk";
+import "../../styles/Home.module.css";
+
 export const searchkitConfig = {
   host: "http://167.172.142.105:5000/api/elasticsearch",
   index: "cassandra_job_posts",
+
   hits: {
     fields: [
       "external_api_name",
@@ -31,7 +38,7 @@ export const searchkitConfig = {
       "job_hours_type",
       "how_to_apply_html",
       "updated_at",
-    ]
+    ],
   },
   sortOptions: [
     {
@@ -50,7 +57,15 @@ export const searchkitConfig = {
       field: [{ external_api_published_at: "asc" }],
     },
   ],
-  query: new MultiMatchQuery({ fields: ["position_name^1"] }),
+
+  query: new MultiMatchQuery({ fields: ["position_name^1", "description^2"] }),
+  facets: [
+    new RefinementSelectFacet({
+      field: "tags",
+      identifier: "tags",
+      label: "Tags",
+    }),
+  ],
 };
 const { typeDefs, withSearchkitResolvers, context } = SearchkitSchema({
   config: searchkitConfig, // searchkit configuration
@@ -118,7 +133,6 @@ export default cors(async (req, res) => {
     res.end();
     return false;
   }
-
   await startServer;
   await server.createHandler({ path: "/api/graphql" })(req, res);
 });

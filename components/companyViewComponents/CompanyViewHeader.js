@@ -7,7 +7,7 @@ const CompanyViewHeader = ({ companyInfo }) => {
       <Card className={classes.cardHeader}>
         <Grid className={classes.cardHeaderName}>
           <CardContent>
-            <Typography variant="h2">
+            <Typography className={classes.heading} variant="h2">
               {companyInfo.hits.hits[0]._source.name}
             </Typography>
             <Typography variant="h5">
@@ -17,8 +17,14 @@ const CompanyViewHeader = ({ companyInfo }) => {
         </Grid>
         <Grid>
           <CardContent>
-            <Typography>
+            <Typography gutterBottom>
               {companyInfo.hits.hits[0]._source.clearbit_description}
+            </Typography>
+            <Typography gutterBottom>
+              Phone: {companyInfo.hits.hits[0]._source.phone}
+            </Typography>
+            <Typography gutterBottom>
+              Website: {companyInfo.hits.hits[0]._source.website_domain}
             </Typography>
           </CardContent>
         </Grid>
