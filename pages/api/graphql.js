@@ -48,12 +48,13 @@ export const searchkitConfig = {
     },
     {
       id: "latest",
-      label: "latest",
+      label: "Latest",
       field: [{ external_api_published_at: "desc" }],
+      defaultOption: true,
     },
     {
       id: "earliest",
-      label: "earliest",
+      label: "Earliest",
       field: [{ external_api_published_at: "asc" }],
     },
   ],
