@@ -95,6 +95,15 @@ const JobHitsItem = ({
       setSelectedJob(item);
     }
   };
+
+  const humanReadableDate = new Date(
+    result.external_api_published_at
+  ).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
   return (
     <Card
       variant="outlined"
@@ -113,7 +122,7 @@ const JobHitsItem = ({
                 <b>Company:</b> {result.company_name}
               </Typography>
               <Typography variant="h6" component="li" gutterBottom>
-                <b>Date:</b> {result.external_api_published_at}
+                <b>Date:</b> {humanReadableDate}
               </Typography>
               <Typography variant="h6" component="li" gutterBottom>
                 <b>Category:</b> {result.position_category}
