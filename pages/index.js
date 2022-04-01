@@ -109,7 +109,8 @@ const JobHitsItem = ({
       variant="outlined"
       onClick={() => onCardClick(result)}
       className={classes.cardItem}
-      sx={{ minWidth: 275 }}>
+      sx={{ minWidth: 275 }}
+    >
       <Box data-qa="hit">
         <CardContent>
           <Box>
@@ -175,7 +176,8 @@ const Index = () => {
               <Grid
                 xs={6}
                 item
-                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}>
+                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}
+              >
                 {data.results.hits.items.map((item) => {
                   return (
                     <JobHitsItem
