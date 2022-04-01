@@ -95,13 +95,21 @@ const JobHitsItem = ({
       setSelectedJob(item);
     }
   };
+
+  const humanReadableDate = new Date(
+    result.external_api_published_at
+  ).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
   return (
     <Card
       variant="outlined"
       onClick={() => onCardClick(result)}
       className={classes.cardItem}
-      sx={{ minWidth: 275 }}
-    >
+      sx={{ minWidth: 275 }}>
       <Box data-qa="hit">
         <CardContent>
           <Box>
@@ -113,7 +121,7 @@ const JobHitsItem = ({
                 <b>Company:</b> {result.company_name}
               </Typography>
               <Typography variant="h6" component="li" gutterBottom>
-                <b>Date:</b> {result.external_api_published_at}
+                <b>Date:</b> {humanReadableDate}
               </Typography>
               <Typography variant="h6" component="li" gutterBottom>
                 <b>Category:</b> {result.position_category}
@@ -167,8 +175,7 @@ const Index = () => {
               <Grid
                 xs={6}
                 item
-                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}
-              >
+                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}>
                 {data.results.hits.items.map((item) => {
                   return (
                     <JobHitsItem
