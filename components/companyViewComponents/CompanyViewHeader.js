@@ -21,10 +21,22 @@ const CompanyViewHeader = ({ companyInfo }) => {
               {companyInfo.hits.hits[0]._source.clearbit_description}
             </Typography>
             <Typography gutterBottom>
-              Phone: {companyInfo.hits.hits[0]._source.phone}
+              Phone:{" "}
+              {companyInfo.hits.hits[0]._source.phone
+                ? companyInfo.hits.hits[0]._source.phone
+                : "No phone number"}
             </Typography>
             <Typography gutterBottom>
-              Website: {companyInfo.hits.hits[0]._source.website_domain}
+              Website:{" "}
+              {companyInfo.hits.hits[0]._source.website_domain
+                ? companyInfo.hits.hits[0]._source.website_domain
+                : "No website"}
+            </Typography>
+            <Typography gutterBottom>
+              Emails:{" "}
+              {companyInfo.hits.hits[0]._source.site_emails
+                ? companyInfo.hits.hits[0]._source.site_emails.join(", ")
+                : "No emails"}
             </Typography>
           </CardContent>
         </Grid>
