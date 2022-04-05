@@ -3,6 +3,10 @@
   padding: 0 20px;
 }
 
+.companyInfo {
+  width: 100%;
+}
+
 .cardHeader {
   margin-bottom: 20px;
 }

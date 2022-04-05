@@ -32,7 +32,6 @@ const CompanyJobPosts = () => {
     }
     getData();
   }, [slug]);
-
   return (
     <Grid item sm={12} md={6}>
       <Card>
