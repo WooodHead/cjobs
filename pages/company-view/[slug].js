@@ -1,4 +1,6 @@
+import { Grid } from "@material-ui/core";
 import CompanyCard from "../../components/CompanyCard";
+import classes from "../../styles/CompanyCard.module.css";
 
 export const getServerSideProps = async (context) => {
   const { slug } = context.query;
@@ -14,9 +16,9 @@ export const getServerSideProps = async (context) => {
 
 const Details = ({ companyInfo }) => {
   return (
-    <div>
+    <Grid className={classes.companyInfo}>
       <CompanyCard companyInfo={companyInfo} />
-    </div>
+    </Grid>
   );
 };
 

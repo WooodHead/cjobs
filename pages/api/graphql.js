@@ -90,16 +90,16 @@ const server = new ApolloServer({
         root: String
       }
       type HitFields {
-        external_api_name: String
-        external_api_id: String
-        original_post_url: String
+        external_api_name: String!
+        external_api_id: String!
+        original_post_url: String!
         tags: [String]
-        external_api_published_at: String
-        description: String
-        description_html: String
-        position_name: String
-        position_category: String
-        company_name: String
+        external_api_published_at: String!
+        description: String!
+        description_html: String!
+        position_name: String!
+        position_category: String!
+        company_name: String!
         company_logo_url: String
         external_api_verified: String
         external_api_original: String
