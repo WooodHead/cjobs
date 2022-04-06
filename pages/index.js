@@ -8,7 +8,7 @@ import { Card, CardContent, Grid, Typography, Box } from "@material-ui/core";
 import { gql, useQuery } from "@apollo/client";
 import { useSearchkitVariables, withSearchkit } from "@searchkit/client";
 import withApollo from "../lib/withApollo";
-import "@elastic/eui/dist/eui_theme_light.css";
+
 import { useSearchkit } from "@searchkit/client";
 import {
   ResetSearchButton,
@@ -174,7 +174,8 @@ const JobHitsItem = ({
       variant="outlined"
       onClick={() => onCardClick(result)}
       className={classes.cardItem}
-      sx={{ minWidth: 275 }}>
+      sx={{ minWidth: 275 }}
+    >
       <Box data-qa="hit">
         <CardContent>
           <Box>
@@ -243,7 +244,8 @@ const Index = () => {
               <Grid
                 xs={6}
                 item
-                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}>
+                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}
+              >
                 {data.results.hits.items.map((item) => {
                   return (
                     <JobHitsItem
