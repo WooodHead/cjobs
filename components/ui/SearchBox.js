@@ -7,6 +7,7 @@ const SearchBox = () => {
   const [value, setValue] = useSearchkitQueryValue();
   return (
     <Input
+      data-cy="searchBox"
       disableUnderline={true}
       className={classes.searchBox}
       type="text"

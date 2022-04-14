@@ -35,7 +35,7 @@ const CompanyViewHeader = ({ companyInfo }) => {
                     ? companyInfo.hits.hits[0]._source.website_domain
                     : "No website"}
                 </Typography>
-                <Typography gutterBottom>
+                <Typography data-cy="mails" gutterBottom>
                   Emails:{" "}
                   {companyInfo.hits.hits[0]._source.site_emails
                     ? companyInfo.hits.hits[0]._source.site_emails.join(", ")
