@@ -105,11 +105,11 @@ const JobHitsItem = ({
 
   return (
     <Card
+      data-cy="card"
       variant="outlined"
       onClick={() => onCardClick(result)}
       className={classes.cardItem}
-      sx={{ minWidth: 275 }}
-    >
+      sx={{ minWidth: 275 }}>
       <Box data-qa="hit">
         <CardContent>
           <Box>
@@ -117,7 +117,11 @@ const JobHitsItem = ({
               {result.position_name}
             </Typography>
             <Typography component="ul" className={classes.cardContent}>
-              <Typography variant="h6" component="li" gutterBottom>
+              <Typography
+                data-cy="companyName"
+                variant="h6"
+                component="li"
+                gutterBottom>
                 <b>Company:</b> {result.company_name}
               </Typography>
               <Typography variant="h6" component="li" gutterBottom>
@@ -163,7 +167,10 @@ const Index = () => {
     <EuiPage style={{ paddingTop: "60px", width: "100%", height: "100vh" }}>
       <EuiPageSideBar>
         <SearchBox />
-        <SortingSelector data={data?.results} loading={loading} />
+        <Grid data-cy="sortSelector">
+          <SortingSelector data={data?.results} loading={loading} />
+        </Grid>
+
         <EuiHorizontalRule margin="m" />
         <Grid className={classes.facets}>
           <Facets loading={loading} data={data?.results} />
@@ -177,8 +184,7 @@ const Index = () => {
               <Grid
                 xs={6}
                 item
-                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}
-              >
+                className={`${classes.sk_hits_stats__info} ${classes.sk_hits_stats}`}>
                 {data.results.hits.items.map((item) => {
                   return (
                     <JobHitsItem
@@ -197,6 +203,7 @@ const Index = () => {
             <EuiFlexGroup justifyContent="center">
               <Grid className={classes.paginationContainer}>
                 <EuiPagination
+                  data-cy="pagination"
                   pageCount={
                     data.results.hits.page.totalPages > 1000
                       ? 1000

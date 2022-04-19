@@ -14,7 +14,7 @@ const JobDescription = ({ job }) => {
               <Typography sx={{ mb: 1.5 }} color="secondary" component="div">
                 Company Name:{" "}
                 <Link href={`company-view/${job.company_name}`}>
-                  <a>{job.company_name}</a>
+                  <a data-cy="companyLink">{job.company_name}</a>
                 </Link>
               </Typography>
               <Typography color="gray">
@@ -25,13 +25,11 @@ const JobDescription = ({ job }) => {
           <Card className={classes.descriptionCard} elevation={2}>
             <CardHeader title="Description" />
             <CardContent className={classes.cardContent}>
-              {job.description_html && (
-                <Typography
-                  dangerouslySetInnerHTML={{
-                    __html: job.description_html,
-                  }}
-                ></Typography>
-              )}
+              <Typography
+                dangerouslySetInnerHTML={{
+                  __html: job.description_html,
+                }}
+              ></Typography>
             </CardContent>
           </Card>
         </>
