@@ -25,9 +25,13 @@ const JobDescription = ({ job }) => {
           <Card className={classes.descriptionCard} elevation={2}>
             <CardHeader title="Description" />
             <CardContent className={classes.cardContent}>
-              <Typography
-                dangerouslySetInnerHTML={{ __html: job.description_html }}
-              ></Typography>
+              {job.description_html && (
+                <Typography
+                  dangerouslySetInnerHTML={{
+                    __html: job.description_html,
+                  }}
+                ></Typography>
+              )}
             </CardContent>
           </Card>
         </>

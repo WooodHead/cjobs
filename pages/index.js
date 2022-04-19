@@ -57,7 +57,7 @@ const QUERY = gql`
             id
             fields {
               external_api_published_at
-              description
+
               description_html
               position_name
               position_category
@@ -88,7 +88,6 @@ const JobHitsItem = ({
   setIsCardClicked,
 }) => {
   const onCardClick = (item) => {
-    console.log(selectedJob);
     if (selectedJob && selectedJob.external_api_id === item.external_api_id) {
       setSelectedJob(null);
     } else {
@@ -147,6 +146,8 @@ const Index = () => {
   } = useQuery(QUERY, {
     variables,
   });
+
+  console.log(data);
 
   useEffect(() => {
     if (selectedJob) {
